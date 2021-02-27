@@ -2,20 +2,19 @@
   "name": "purescript-halogen-template",
   "version": "0.0.1",
   "description": "Template for Halogen Project",
-  "main": "index.js",
+  "private": "true",
   "scripts": {
     "postinstall": "spago install",
-    "clean": "rm -rf node_modules output dce-output .spago build dist *.lock .cache",
+    "clean": "rm -rf node_modules output dce-output .spago build *.lock .cache",
     "build": "spago build",
     "watch": "spago build --watch",
-    "serve": "mkdir -p build/development && cp assets/index.html build/development/index.html && cp index-dev.js build/development/index.js && parcel build/development/index.html --open",
+    "serve": "mkdir -p build/development && webpack serve --open --config webpack.development.js",
     "test": "spago test",
-    "build:production": "mkdir -p build/production && cp assets/index.html build/production/index.html && rm -rf dist && spago bundle-app --to build/production/index.js && parcel build build/production/index.html",
-    "serve:production": "npm run build:production && parcel build/production/index.html --open",
+    "serve:production": "npm run bundle && webpack serve --open --config webpack.production.js",
     "bundle:build": "spago build --purs-args '--codegen corefn'",
     "bundle:dce": "zephyr -f Main.main",
-    "bundle:parcel": "mkdir -p build/production && cp assets/index.html build/production/index.html && cp index.js build/production/index.js && rm -rf dist && parcel build build/production/index.html --no-source-maps --experimental-scope-hoisting",
-    "bundle": "npm run bundle:build && npm run bundle:dce && npm run bundle:parcel"
+    "bundle:webpack": "mkdir -p build/production && webpack --config webpack.production.js",
+    "bundle": "npm run bundle:build && npm run bundle:dce && npm run bundle:webpack"
   },
   "author": {
     "name": "Takafumi Asano",
@@ -29,6 +28,12 @@
     }
   ],
   "devDependencies": {
-    "parcel": "^1.12.4"
+    "autoprefixer": "^10.2.4",
+    "html-webpack-plugin": "^5.2.0",
+    "postcss": "^8.2.6",
+    "tailwindcss": "^2.0.3",
+    "webpack": "^5.24.2",
+    "webpack-cli": "^4.5.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
