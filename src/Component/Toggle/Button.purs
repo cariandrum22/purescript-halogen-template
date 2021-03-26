@@ -1,4 +1,4 @@
-module Component.Toggle.Button where
+module Component.Toggle.Button (component) where
 
 import Prelude
 
@@ -12,7 +12,7 @@ type State = { enabled :: Boolean }
 
 data Action = Toggle
 
-component :: forall q i o m. H.Component HH.HTML q i o m
+component :: forall q i o m. H.Component q i o m
 component =
   H.mkComponent
     { initialState
@@ -30,7 +30,7 @@ render state =
   in
     HH.button
       [ HP.title label
-      , HE.onClick \_ -> Just Toggle
+      , HE.onClick \_ -> Toggle
       ]
       [ HH.text label ]
 
